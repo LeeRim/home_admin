@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head th:replace="/common/common :: mainHead"> </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+      	<div th:replace="/common/common :: mainMenu"></div>
+      	<div th:replace="/common/common :: mainTop"></div>
+
+        <!-- page content -->
+        
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer th:replace="/common/common :: mainFooter"></footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+	<div th:replace="/common/common :: mainScript"></div>
+  </body>
+</html>

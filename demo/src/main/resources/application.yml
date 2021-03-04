@@ -1,0 +1,15 @@
+spring:
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    mode: HTML5
+    suffix: .html
+    cache: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/admin
+    username: root 
+    password: rharha0208 
+  jpa:
+    show-sql: true
+    database: mysql

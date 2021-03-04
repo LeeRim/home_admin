@@ -1,0 +1,21 @@
+div.dataTables_wrapper div.dataTables_filter{
+	bottom: 0;
+    position: absolute;
+    right: 0;
+}
+
+div.check-list{
+	margin: 0 0 15px 0;
+}
+
+div.check-list label{
+	margin: 0 10px 0 0;
+}
+
+div.check-list p{
+	font-weight: bold;
+}
+
+div.check-list div.icheckbox_flat-green{
+	margin: 0 5px 0 0;
+}
