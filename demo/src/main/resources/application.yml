@@ -7,7 +7,8 @@ spring:
     cache: false
 
   datasource:
-    url: jdbc:mysql://localhost:3306/admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/admin?serverTimezone=UTC&charaterEncoding=UTF-8&useSSL=false
     username: root 
     password: rharha0208 
   jpa:
