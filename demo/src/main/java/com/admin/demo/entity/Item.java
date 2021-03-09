@@ -26,9 +26,6 @@ public class Item {
 	@Column(name="item_name")
 	private String itemName;
 	
-	@Column(name="place_fk")
-	private String placeFK;
-	
 	private String division;
 	
 	private String spot;
@@ -40,4 +37,8 @@ public class Item {
 	@ManyToOne
 	@JoinColumn(name="usage_fk")
 	private Usage usage;
+	
+	@ManyToOne
+	@JoinColumn(name="place_fk")
+	private Place place;
 }

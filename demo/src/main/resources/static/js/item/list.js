@@ -2,11 +2,61 @@
 (function ($) {
     "use strict";
     
-    $("#item-table").DataTable({
+    let item_table = $("#item-table").DataTable({
     	fixedHeader: true,
     	lengthChange: false,
-    	pageLength: 30
+    	pageLength: 30,
+    	columns: [
+    		{ "data": "usageName" },
+    		{ "data": "division" },
+    		{ "data": "itemName" },
+    		{ "data": "areaName" },
+    		{ "data": "placeName" },
+    		{ "data": "spot" },
+    		{ "data": "unit" },
+    		{ "data": "count" },
+    		{ "data": "action" }
+    		]
     });
+    
+    let datas=new Array();
+    $.ajax({
+    	type: 'GET',
+    	url: '/data/item'
+    }).done(function(data, textStatus, xhr){
+    	let d={};
+    	$.each(data,function(index,row){
+    		
+    		d.usageName=row.usage.usageName;
+    		d.division=(row.division=="somo")? "소모품":"비품";
+    		d.itemName=row.itemName;
+    		d.areaName=row.place.areaName;
+    		d.placeName=row.place.placeName;
+    		d.spot=row.spot;
+    		d.unit=row.unit;
+    		d.count=row.count;
+    		d.action="";
+    		datas.push(d);
+    		d={};
+    	});
+    	
+    	item_table.rows.add(datas).draw();
+
+    }).fail(function(xhr, textStatus, error){
+//		console.log(xhr.responseText);
+    });
+    
+    $("div.checkbox").off("click").click(function(){
+		let $this_input = $(this).find("input");
+//		let check_bool = $this.find("input").attr("checked");
+		if ($this_input.is(":checked")){
+			$this_input.prop("checked",false);
+		}else{
+			$this_input.prop("checked",true);
+		}
+		console.log($this_input);
+	});
+    
     
     // check object
     function Check() {
@@ -69,10 +119,23 @@
     	check.add("#item-table_wrapper");
     }
     
+    function addCheckEvent(){
+    	$("div.checkbox").off("click").click(function(){
+    		let $this_input = $(this).find("input");
+//    		let check_bool = $this.find("input").attr("checked");
+    		if ($this_input.is(":checked")){
+    			$this_input.prop("checked",false);
+    		}else{
+    			$this_input.prop("checked",true);
+    		}
+    		console.log($this_input);
+    	});
+    }
+    
     
     $.ajax({
 		type: 'GET',
-		url: '/item/data/usage'
+		url: '/data/usage'
 	}).done(function(data, textStatus, xhr){
 		let usageList=[];
 		let usageMap={};
@@ -89,29 +152,9 @@
 	}).always(function(){
 		let divList=[{key:"div_1",label:"소모품"},{key:"div_2",label:"비품"}];
 		addCheckHtml("구분 선택",divList);
+//		addCheckEvent();
 	});
     
-    $.ajax({
-		type: 'GET',
-		url: '/item/data/item'
-	}).done(function(data, textStatus, xhr){
-		let tr=null;
-		$.each(data,function(index,row){
-			tr = $("#item-table tbody").append("<tr />");
-			console.log(row);
-			tr.append("<td>"+row.usage.usageName+"</td>");
-			tr.append("<td>"+row.division+"</td>");
-			tr.append("<td>"+row.itemName+"</td>");
-			tr.append("<td>"+row.placeFK+"</td>");
-			tr.append("<td>"+row.placeFK+"</td>");
-			tr.append("<td>"+row.spot+"</td>");
-			tr.append("<td>"+row.unit+"</td>");
-			tr.append("<td>"+row.count+"</td>");
-		});
-	    
-	}).fail(function(xhr, textStatus, error){
-//		console.log(xhr.responseText);
-	});
     
     
 })(jQuery);
