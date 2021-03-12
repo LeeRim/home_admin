@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="/common/common :: mainHead">
+<head th:replace="./common/common :: mainHead">
 </head>
 <head>
 	<link href="/css/item.css" rel="stylesheet">
@@ -10,8 +10,8 @@
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
-			<div th:replace="/common/common :: mainMenu"></div>
-			<div th:replace="/common/common :: mainTop"></div>
+			<div th:replace="./common/common :: mainMenu"></div>
+			<div th:replace="./common/common :: mainTop"></div>
 
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -547,11 +547,11 @@
 			<!-- /page content -->
 
 			<!-- footer content -->
-			<footer th:replace="/common/common :: mainFooter"></footer>
+			<footer th:replace="./common/common :: mainFooter"></footer>
 			<!-- /footer content -->
 		</div>
 	</div>
-	<div th:replace="/common/common :: mainScript"></div>
+	<div th:replace="./common/common :: mainScript"></div>
 	<script src="/js/item/list.js"></script>
 </body>
 </html>
