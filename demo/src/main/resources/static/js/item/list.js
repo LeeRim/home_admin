@@ -63,6 +63,7 @@
 			createItem(item, function() {
 				alert("[ " + item.itemName + " ]을/를 생성하였습니다");
 				drawTableData(item_table, null);
+				$("button[data-dismiss='modal']").trigger("click");
 			});
 		}
 	});
