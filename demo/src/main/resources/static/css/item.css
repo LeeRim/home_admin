@@ -1,8 +1,8 @@
-div.dataTables_wrapper div.dataTables_filter{
+/* div.dataTables_wrapper div.dataTables_filter{
 	bottom: 0;
     position: absolute;
     right: 0;
-}
+} */
 
 div.check-list{
 	margin: 0 0 15px 0;
@@ -18,4 +18,20 @@ div.check-list p{
 
 div.check-list div.icheckbox_flat-green{
 	margin: 0 5px 0 0;
+}
+
+table.dataTable tbody tr.selected {
+  background-color: #B0BED9;
+}
+
+table.dataTable td {
+    cursor: pointer;
+}
+
+div.input-div div.row{
+	margin-bottom: 10px;
+}
+
+div.input-label{
+	text-align: right;
 }

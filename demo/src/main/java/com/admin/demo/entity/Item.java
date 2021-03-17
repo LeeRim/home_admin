@@ -32,7 +32,7 @@ public class Item {
 	
 	private String unit;
 	
-	private String count;
+	private int count;
 	
 	@ManyToOne
 	@JoinColumn(name="usage_fk")
