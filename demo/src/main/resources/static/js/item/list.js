@@ -68,7 +68,46 @@
 		}
 	});
 
+	$("#btn-show-update").click(function() {
+		let tr = $("#item-table tr.selected");
+		if (tr.length != 0) {
+			$("#updateModal").modal("show");
+			let item = tr.data("item");
+			selectItem(item.itemKey, function(data) {
+				$.each(data,function(key, val){
+					if(typeof(val)=="object"){
+						$.each(val,function(k,v){
+							$("#update-form [data-key='"+k+"']").val(v);
+						});
+					}else{
+						if($("#update-form [name='"+key+"']").attr("type")=="radio"){
+							$("#update-form [value='"+val+"']").prop("checked","true");
+						}else{							
+							$("#update-form [name='"+key+"']").val(val);
+						}
+					}
+				});
+				$("#update-form .select-area").trigger("change");
+			});
+		} else {
+			alert("제품을 선택해주세요");
+		}
+	});
+	
+	$("#btn-update").click(function() {
+		let item = $("#update-form").serializeObject();
+		let bool = confirm("[ " + item.itemName + " ]을/를 수정하시겠습니까?");
+		if (bool) {
+			updateItem(item, function() {
+				alert("[ " + item.itemName + " ]을/를 수정하였습니다");
+				drawTableData(item_table, null);
+				$("button[data-dismiss='modal']").trigger("click");
+			});
+		}
+	});
+
 	// draw 'usage' check box & select option
+	$("#item-table_wrapper").children().eq(0).children().eq(0).append("<form id='check-form'></form>")
 	$.ajax({
 		type: 'GET',
 		url: '/data/usage'
@@ -90,15 +129,17 @@
 		});
 
 		let usageCheck = new Check();
-		usageCheck.init("usageKey", "사용처 선택", usageList);
+		usageCheck.init("사용처 선택", "usageKey", usageList);
 
 	}).fail(function(xhr, textStatus, error) {
 		//		console.log(xhr.responseText);
 	}).always(function() {
 		let divList = [{ key: "somo", label: "소모품" }, { key: "bi", label: "비품" }];
 		let divCheck = new Check();
-		divCheck.init("division", "구분 선택", divList);
-		addCheckEvent("#item-table_wrapper");
+		divCheck.init("구분 선택", "division", divList);
+		$("#item-table_wrapper input[type='checkbox']").click(function() {
+			drawTableData(item_table, $("#check-form").serialize());
+		});
 	});
 
 	// draw 'place' select option
@@ -181,26 +222,27 @@
 	function Check() {
 		this.div_html = "";
 		this.list_html = "";
-		this.init = function(id, title, list) {
-			this.create(id, title);
-			this.setList(list);
+		this.init = function(title, name, list) {
+			this.create(title);
+			this.setList(name, list);
 			this.add("#item-table_wrapper");
 		};
-		this.create = function(id, title) {
+		this.create = function(title) {
 			// #check-div is check template
 			let div = $("#check-div").clone(true);
-			div.find("div.check-list").attr("id", id);
 			div.find("p").text(title);
 			div.find("div.checkbox").remove();
 			this.div_html = div.html();
 		};
-		this.setList = function(list) {
+		this.setList = function(name, list) {
 			let input_box = $("#check-div .checkbox").clone(true);
 			let input_html = '';
 			let row_html = '';
 			$.each(list, function(index, row) {
 				row_html = input_box.clone(true);
+				row_html.find("input").val(row.key);
 				row_html.find("input").attr("id", row.key);
+				row_html.find("input").attr("name", name);
 				row_html.find("label").append(row.label);
 				row_html.find("label").attr("for", row.key);
 				input_html += row_html.prop('outerHTML');
@@ -208,31 +250,13 @@
 			this.list_html = $(this.div_html).append(input_html).prop('outerHTML');
 		};
 		this.add = function(div_id) {
-			$(div_id).children().eq(0).children().eq(0).append($(this.list_html));
+			$(div_id).children().eq(0).children().eq(0).children().eq(0).append($(this.list_html));
 		};
 	}
 
 	function addCheckEvent(wrapper_id) {
 		$(wrapper_id + " input[type='checkbox']").click(function() {
-			let $this_input = $(this);
-			let key = "";
-			let params = {};
-			$(wrapper_id).find("input[type='checkbox']").each(function(index, row) {
-				key = $(row).parents("div.check-list").attr("id");
-				if (params[key] == null) {
-					params[key] = [];
-				}
-				if ($(row).prop("checked")) {
-					params[key].push($(row).attr("id"));
-				}
-			});
-			let paramStr = "";
-			for (key in params) {
-				paramStr += key + "=";
-				paramStr += params[key].join(",");
-				paramStr += "&";
-			}
-			drawTableData(item_table, paramStr);
+			drawTableData(item_table, $("#check-form").serialize());
 		});
 	}
 
