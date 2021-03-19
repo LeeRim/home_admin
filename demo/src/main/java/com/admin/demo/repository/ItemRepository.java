@@ -11,7 +11,6 @@ import com.admin.demo.entity.Item;
 public interface ItemRepository extends JpaRepository<Item, String> {
 	@Query(value = "SELECT nextval(admin.seq_item) FROM dual", nativeQuery = true)
 	public Long getNextVal();
-    //public BigDecimal getNextValMySequence();
 	
 	Optional<Item> findById(String itemKey);
 	

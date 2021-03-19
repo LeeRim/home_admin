@@ -54,8 +54,8 @@
 											<div id="button-div" class="row" style="display:block;text-align: right;">
 												<button id="btn-useone" class="btn btn-info btn-sm">-1</button>
 												<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#createModal">생성</button>
-												<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#useModal">사용</button>
-												<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">구매</button>
+												<button id="btn-show-use" class="btn btn-info btn-sm" data-toggle="modal">사용</button>
+												<button id="btn-show-buy" class="btn btn-info btn-sm" data-toggle="modal">구매</button>
 												<button id="btn-show-update" class="btn btn-info btn-sm">수정</button>
 												<button class="btn btn-info btn-sm">삭제</button>
 												
@@ -76,6 +76,7 @@
 														<th>상세위치</th>
 														<th>단위수</th>
 														<th>수량</th>
+														<th>이력</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -101,6 +102,7 @@
 		</div>
 	</div>
 	<div th:replace="./common/common :: mainScript"></div>
+	<script src="/js/common/crud.js"></script>
 	<script src="/js/item/list.js"></script>
 </body>
 </html>

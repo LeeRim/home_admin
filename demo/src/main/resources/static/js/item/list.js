@@ -14,7 +14,8 @@
 			{ "data": "placeName" },
 			{ "data": "spot" },
 			{ "data": "unit" },
-			{ "data": "count" }
+			{ "data": "count" },
+			{ "data": "history" }
 		],
 		createdRow: function(row, data, dataIndex) {
 			$(row).data("item", data);
@@ -40,14 +41,17 @@
 		let tr = $("#item-table tr.selected");
 		if (tr.length != 0) {
 			let item = tr.data("item");
-			let reItem = null;
 			let bool = confirm("[ " + item.itemName + " ]을/를 1개 사용하시겠습니까?");
+			let history = {item: {itemKey: item.itemKey}, action: "use", count: "1"};
 			if (bool) {
-				selectItem(item.itemKey, function(data) {
+				$.crud.select('/data/item/'+item.itemKey, function(data) {
+					data.count = Number(data.count);
 					data.count -= 1;
-					updateItem(data, function() {
+					$.crud.update('/data/item/'+item.itemKey, data, function() {
 						alert("[ " + item.itemName + " ]을/를 1개 사용하여\n현재 남은 수량은 \'" + data.count + "\' 입니다");
 						drawTableData(item_table, null);
+						
+						$.crud.create('/data/history', history);
 					});
 				});
 			}
@@ -60,7 +64,7 @@
 		let item = $("#create-form").serializeObject();
 		let bool = confirm("[ " + item.itemName + " ]을/를 생성하시겠습니까?");
 		if (bool) {
-			createItem(item, function() {
+			$.crud.create('/data/item', item, function() {
 				alert("[ " + item.itemName + " ]을/를 생성하였습니다");
 				drawTableData(item_table, null);
 				$("button[data-dismiss='modal']").trigger("click");
@@ -68,22 +72,85 @@
 		}
 	});
 
+	$("#btn-show-use").click(function() {
+		let tr = $("#item-table tr.selected");
+		if (tr.length != 0) {
+			$("#useModal").modal("show");
+			let item = tr.data("item");
+			$("#use-itemName").text(item.itemName);
+			$("#use-itemKey").val(item.itemKey);
+			$("#use-now").text(item.count);
+		} else {
+			alert("제품을 선택해주세요");
+		}
+	});
+
+	$("#btn-use").click(function() {
+		let tr = $("#item-table tr.selected");
+		let item = tr.data("item");
+		let useCount = $("#use-count").val();
+		let history = $("#use-form").serializeObject();
+		console.log(history);
+		$.crud.select('/data/item/'+item.itemKey, function(data) {
+			data.count = Number(data.count);
+			data.count -= Number(useCount);
+			$.crud.update('/data/item/'+item.itemKey, data, function() {
+				alert("[ " + item.itemName + " ]을/를 " + useCount + "개 사용하여\n현재 남은 수량은 \'" + data.count + "\' 입니다");
+				drawTableData(item_table, null);
+				$("button[data-dismiss='modal']").trigger("click");
+
+				//$.crud.create('/data/history', history);
+			});
+		});
+	});
+
+	$("#btn-show-buy").click(function() {
+		let tr = $("#item-table tr.selected");
+		if (tr.length != 0) {
+			$("#buyModal").modal("show");
+			let item = tr.data("item");
+			$("#buy-itemName").text(item.itemName);
+			$("#buy-itemKey").val(item.itemKey);
+			$("#buy-now").text(item.count);s
+		} else {
+			alert("제품을 선택해주세요");
+		}
+	});
+
+	$("#btn-buy").click(function() {
+		let tr = $("#item-table tr.selected");
+		let item = tr.data("item");
+		let buyCount = $("#buy-count").val();
+		let history = $("#buy-form").serializeObject();
+		$.crud.select('/data/item/'+item.itemKey, function(data) {
+			data.count = Number(data.count);
+			data.count += Number(buyCount);
+			$.crud.update('/data/item/'+item.itemKey, data, function() {
+				alert("[ " + item.itemName + " ]을/를 " + buyCount + "개 구매하여\n현재 남은 수량은 \'" + data.count + "\' 입니다");
+				drawTableData(item_table, null);
+				$("button[data-dismiss='modal']").trigger("click");
+
+				//$.crud.create('/data/history', history);
+			});
+		});
+	});
+
 	$("#btn-show-update").click(function() {
 		let tr = $("#item-table tr.selected");
 		if (tr.length != 0) {
 			$("#updateModal").modal("show");
 			let item = tr.data("item");
-			selectItem(item.itemKey, function(data) {
-				$.each(data,function(key, val){
-					if(typeof(val)=="object"){
-						$.each(val,function(k,v){
-							$("#update-form [data-key='"+k+"']").val(v);
+			$.crud.select('/data/item/'+item.itemKey, function(data) {
+				$.each(data, function(key, val) {
+					if (typeof (val) == "object") {
+						$.each(val, function(k, v) {
+							$("#update-form [data-key='" + k + "']").val(v);
 						});
-					}else{
-						if($("#update-form [name='"+key+"']").attr("type")=="radio"){
-							$("#update-form [value='"+val+"']").prop("checked","true");
-						}else{							
-							$("#update-form [name='"+key+"']").val(val);
+					} else {
+						if ($("#update-form [name='" + key + "']").attr("type") == "radio") {
+							$("#update-form [value='" + val + "']").prop("checked", "true");
+						} else {
+							$("#update-form [name='" + key + "']").val(val);
 						}
 					}
 				});
@@ -93,12 +160,12 @@
 			alert("제품을 선택해주세요");
 		}
 	});
-	
+
 	$("#btn-update").click(function() {
 		let item = $("#update-form").serializeObject();
 		let bool = confirm("[ " + item.itemName + " ]을/를 수정하시겠습니까?");
 		if (bool) {
-			updateItem(item, function() {
+			$.crud.update('/data/item/'+item.itemKey, item, function() {
 				alert("[ " + item.itemName + " ]을/를 수정하였습니다");
 				drawTableData(item_table, null);
 				$("button[data-dismiss='modal']").trigger("click");
@@ -206,6 +273,7 @@
 				d.spot = row.spot;
 				d.unit = row.unit;
 				d.count = row.count;
+				d.history = "<a href='/item/history?itemKey=" + row.itemKey + "'>이력보기</a>"
 				datas.push(d);
 				d = {};
 			});
@@ -260,9 +328,7 @@
 		});
 	}
 
-	function selectItem(key, callback = function() { }) {
-		let url = '/data/item';
-		let selectData = null;
+	/*function selectDB(url, key, callback = function() { }) {
 		$.ajax({
 			type: 'GET',
 			url: url + "/" + key
@@ -273,8 +339,7 @@
 		});
 	}
 
-	function createItem(data, callback = function() { }) {
-		let url = '/data/item';
+	function createDB(url, data, callback = function() { }) {
 		let result = 0;
 		$.ajax({
 			type: 'POST',
@@ -308,6 +373,17 @@
 			//    		console.log(xhr.responseText);
 		});
 	}
+	
+	function selectByParam(url, key, callback = function() { }) {
+		$.ajax({
+			type: 'GET',
+			url: url + "/" + key
+		}).done(function(data, textStatus, xhr) {
+			callback(data);
+		}).fail(function(xhr, textStatus, error) {
+			//    		console.log(xhr.responseText);
+		});
+	}*/
 
 	$.fn.serializeObject = function() {
 		var obj = null;

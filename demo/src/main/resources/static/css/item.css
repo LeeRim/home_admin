@@ -20,6 +20,10 @@ div.check-list div.icheckbox_flat-green{
 	margin: 0 5px 0 0;
 }
 
+table#item-table tr td:nth-child(3){
+	font-weight: bold;
+}
+
 table.dataTable tbody tr.selected {
   background-color: #B0BED9;
 }
@@ -33,5 +37,5 @@ div.input-div div.row{
 }
 
 div.input-label{
-	text-align: right;
+	text-align: center;
 }

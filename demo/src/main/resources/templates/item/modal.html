@@ -22,19 +22,19 @@
 						<div class="input-div">
 							<form id="create-form">
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>제품명 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<input type="text" class="form-control form-control-sm" name="itemName"/>
 									</div>
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>사용처 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<select
 											class="form-control form-control-sm select-usage" name="usage.usageKey">
 											<option selected hidden="true" value="">사용처</option>
@@ -43,10 +43,10 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>구분 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<span class="checkbox checkbox-info checkbox-circle"><input
 											type="radio" id="create-radio1" name="division" value="somo" checked><label
 											for="create-radio1">소모품</label></span> <span
@@ -57,10 +57,10 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>장소 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<select class="form-control form-control-sm select-area">
 											<option selected hidden="true" value="">장소</option>
 										</select>
@@ -68,10 +68,10 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<!-- <span>위치 :</span> -->
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<select
 											class="form-control form-control-sm select-place" name="place.placeKey">
 											<option selected hidden="true" value="">위치
@@ -81,19 +81,19 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>상세위치 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<input type="text" class="form-control form-control-sm" name="spot"/>
 									</div>
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>단위수 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<input type="text" class="form-control form-control-sm" name="unit"/>
 									</div>
 									<div class="col-md-1"></div>
@@ -122,19 +122,55 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">...</div>
+					<div class="modal-body">
+						<div class="input-div">
+							<form id="use-form">
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>제품명 :</span>
+									</div>
+									<div class="col-md-7">
+										<p id="use-itemName"></p>
+										<input id="use-itemKey" type="hidden" class="form-control form-control-sm"
+											name="item.itemKey" /> <input type="hidden"
+											class="form-control form-control-sm" value="use"
+											name="action" />
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>현재 수량 :</span>
+									</div>
+									<div class="col-md-7">
+										<p id="use-now"></p>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>사용 수량 :</span>
+									</div>
+									<div class="col-md-7">
+										<input id="use-count" type="text"
+											class="form-control form-control-sm" name="count" />
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+							</form>
+						</div>
+					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-success">Save
-							changes</button>
+							data-dismiss="modal">취소</button>
+						<button id="btn-use" type="button" class="btn btn-success">사용</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- add -->
-		<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+		<!-- buy -->
+		<div class="modal fade" id="buyModal" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -145,12 +181,79 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">...</div>
+					<div class="modal-body">
+						<div class="input-div">
+							<form id="buy-form">
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>제품명 :</span>
+									</div>
+									<div class="col-md-7">
+										<p id="buy-itemName"></p>
+										<input id="buy-itemKey" type="hidden"
+											class="form-control form-control-sm" name="item.itemKey" /> <input
+											type="hidden" class="form-control form-control-sm"
+											value="buy" name="action" />
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>현재 수량 :</span>
+									</div>
+									<div class="col-md-7">
+										<p id="buy-now"></p>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>구매 수량 :</span>
+									</div>
+									<div class="col-md-7">
+										<input id="buy-count" type="text"
+											class="form-control form-control-sm" name="count" />
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>상품명 :</span>
+									</div>
+									<div class="col-md-7">
+										<select class="form-control form-control-sm select-goods">
+											<option selected>직접입력</option>
+										</select>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<!-- <span>상품명 :</span> -->
+									</div>
+									<div class="col-md-7">
+										<input id="buy-goods" type="text"
+											class="form-control form-control-sm" name="goodsName" />
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 input-label">
+										<span>구매 금액 :</span>
+									</div>
+									<div class="col-md-7">
+										<input id="buy-price" type="text"
+											class="form-control form-control-sm" name="price" />
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+							</form>
+						</div>
+					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-success">Save
-							changes</button>
+							data-dismiss="modal">취소</button>
+						<button id="btn-buy" type="button" class="btn btn-success">구매</button>
 					</div>
 				</div>
 			</div>
@@ -172,20 +275,20 @@
 						<div class="input-div">
 							<form id="update-form">
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>제품명 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<input type="hidden" class="form-control form-control-sm" name="itemKey"/>
 										<input type="text" class="form-control form-control-sm" name="itemName"/>
 									</div>
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>사용처 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<select
 											class="form-control form-control-sm select-usage" name="usage.usageKey" data-key="usageKey">
 											<option selected hidden="true" value="">사용처</option>
@@ -194,10 +297,10 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>구분 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<span class="checkbox checkbox-info checkbox-circle"><input
 											type="radio" id="update-radio1" name="division" value="somo" checked><label
 											for="update-radio1">소모품</label></span> <span
@@ -208,10 +311,10 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>장소 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<select class="form-control form-control-sm select-area" data-key="areaName">
 											<option selected hidden="true" value="">장소</option>
 										</select>
@@ -219,10 +322,10 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<!-- <span>위치 :</span> -->
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<select
 											class="form-control form-control-sm select-place" name="place.placeKey" data-key="placeKey">
 											<option selected hidden="true" value="">위치
@@ -232,19 +335,19 @@
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>상세위치 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<input type="text" class="form-control form-control-sm" name="spot"/>
 									</div>
 									<div class="col-md-1"></div>
 								</div>
 								<div class="row">
-									<div class="col-md-3 input-label">
+									<div class="col-md-4 input-label">
 										<span>단위수 :</span>
 									</div>
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<input type="text" class="form-control form-control-sm" name="unit"/>
 										<input type="hidden" class="form-control form-control-sm" name="count"/>
 									</div>
