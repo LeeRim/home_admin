@@ -16,4 +16,3 @@ spring:
     password: rharhaelql 
   jpa:
     show-sql: true
-    database: mysql

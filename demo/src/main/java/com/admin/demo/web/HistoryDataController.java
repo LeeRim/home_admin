@@ -1,15 +1,15 @@
 package com.admin.demo.web;
 
+import com.admin.demo.entity.Item;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.admin.demo.entity.History;
 import com.admin.demo.service.HistoryDataService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -17,6 +17,15 @@ import lombok.RequiredArgsConstructor;
 public class HistoryDataController {
 	
 	private final HistoryDataService historyDataService;
+
+	@GetMapping()
+	@ResponseBody
+	public List<History> getHistory(@RequestParam(value = "itemKey", required=false)List<String> itemKey) {
+
+		List<History> historyList = historyDataService.getHistory(itemKey);
+
+		return historyList;
+	}
 	
 	@PostMapping("")
 	@ResponseBody

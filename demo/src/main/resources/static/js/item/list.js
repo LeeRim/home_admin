@@ -111,7 +111,17 @@
 			let item = tr.data("item");
 			$("#buy-itemName").text(item.itemName);
 			$("#buy-itemKey").val(item.itemKey);
-			$("#buy-now").text(item.count);s
+			$("#buy-now").text(item.count);
+			$.crud.select('/data/history?itemKey='+item.itemKey, function(data) {
+			    $.each(data,function(index, row){
+			        $(".select-goods").append("<option class='select_history_goods'>"+row.goodsName+"</option>");
+			    });
+			    $(".select-goods .select_history_goods").click(function(){
+			        console.log($(this));
+			        $(this).parents(".row").next().css("display","none");
+			    });
+            			console.log(data);
+            		});
 		} else {
 			alert("제품을 선택해주세요");
 		}
@@ -130,7 +140,8 @@
 				drawTableData(item_table, null);
 				$("button[data-dismiss='modal']").trigger("click");
 
-				//$.crud.create('/data/history', history);
+                console.log(history);
+				$.crud.create('/data/history', history);
 			});
 		});
 	});
@@ -171,6 +182,10 @@
 				$("button[data-dismiss='modal']").trigger("click");
 			});
 		}
+	});
+
+	$(".select_input_text").click(function(){
+	    $(this).parents(".row").next().css("display","");
 	});
 
 	// draw 'usage' check box & select option

@@ -1,7 +1,9 @@
 package com.admin.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.admin.demo.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,4 +14,6 @@ public interface HistoryRepository extends JpaRepository<History, String>{
 	public Long getNextVal();
 	
 	Optional<History> findById(String historyKey);
+
+	List<History> findDistinctByItem_ItemKeyIn(List<String> itemKey);
 }
