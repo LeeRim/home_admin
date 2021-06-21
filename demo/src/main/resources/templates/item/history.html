@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="./common/common :: mainHead">
+</head>
+<head>
+<link href="/css/item.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<div th:replace="./common/common :: mainMenu"></div>
+			<div th:replace="./common/common :: mainTop"></div>
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 ">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>
+									Basic Tables <small>basic table subtitle</small>
+								</h2>
+								<!-- <ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i
+											class="fa fa-chevron-up"></i></a></li>
+									<li class="dropdown"><a href="#" class="dropdown-toggle"
+										data-toggle="dropdown" role="button" aria-expanded="false"><i
+											class="fa fa-wrench"></i></a>
+										<div class="dropdown-menu"
+											aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Settings 1</a> <a
+												class="dropdown-item" href="#">Settings 2</a>
+										</div></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a>
+									</li>
+								</ul> -->
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div class="row">
+									<div class="col-6">
+										<table class="w-full">
+											<tr>
+												<td>제품명</td>
+												<td><b th:text="${item.itemName}"></b></td>
+												<td>구분</td>
+												<td><b th:text="${item.division}"></b></td>
+											</tr>
+											<tr>
+												<td>사용처</td>
+												<td>제품명</td>
+												<td>단위수</td>
+												<td>제품명</td>
+											</tr>
+											<tr>
+												<td>위치</td>
+												<td>제품명</td>
+												<td>수량</td>
+												<td>제품명</td>
+											</tr>
+											<tr>
+												<td>상세위치</td>
+												<td colspan="3">제품명</td>
+											</tr>
+										</table>
+									</div>
+									<div class="col-6">
+										위치 사진
+									</div>
+								</div>
+								
+								<div class="row m-t-30">
+									<table id="history-table" class="table">
+										<thead>
+											<tr>
+												<th>일자</th>
+												<th>action</th>
+												<th>수량</th>
+												<th>가격</th>
+												<th>제품명</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- <tr>
+												<th scope="row">1</th>
+												<td>Mark</td>
+												<td>Otto</td>
+												<td>@mdo</td>
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td>Jacob</td>
+												<td>Thornton</td>
+												<td>@fat</td>
+											</tr>
+											<tr>
+												<th scope="row">3</th>
+												<td>Larry</td>
+												<td>the Bird</td>
+												<td>@twitter</td>
+											</tr> -->
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /page content -->
+
+			<!-- modal content -->
+			<div th:replace="./item/modal :: modalHtml"></div>
+			<!-- /modal content -->
+
+			<!-- footer content -->
+			<footer th:replace="./common/common :: mainFooter"></footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+	<div th:replace="./common/common :: mainScript"></div>
+	<script src="/js/common/crud.js"></script>
+	<script src="/js/item/history.js"></script>
+</body>
+</html>

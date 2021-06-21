@@ -14,6 +14,6 @@ public interface HistoryRepository extends JpaRepository<History, String>{
 	public Long getNextVal();
 	
 	Optional<History> findById(String historyKey);
-
+	
 	List<History> findDistinctByItem_ItemKeyIn(List<String> itemKey);
 }
